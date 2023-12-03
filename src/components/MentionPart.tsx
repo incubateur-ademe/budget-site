@@ -1,9 +1,9 @@
-export type MentionPartProps = {
-  title: string;
-  description: string;
+export interface MentionPartProps {
   children?: React.ReactNode | React.ReactNode[];
+  description: string;
   divProps?: React.HTMLAttributes<HTMLDivElement>;
-};
+  title: string;
+}
 
 export const MentionPart = (props: MentionPartProps): JSX.Element => {
   return (

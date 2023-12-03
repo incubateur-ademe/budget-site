@@ -36,9 +36,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-# VSCode
-.vscode
-
 # Cypress
 cypress/videos
 cypress/screenshots
@@ -54,3 +51,8 @@ robots.txt
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+/public/dsfr/
+
+/public/sitemap.xml
+/public/sitemap*.xml
