@@ -1,9 +1,7 @@
-import CguContent from "@__content/cgu.mdx";
 import { type Metadata } from "next";
 
 import { config } from "@/config";
 import { Container } from "@/dsfr";
-import { anchorHeadingMDXComponents } from "@/mdx-components";
 
 import { sharedMetadata } from "../shared-metadata";
 
@@ -29,7 +27,7 @@ export const metadata: Metadata = {
 const Cgu = () => (
   <Container my="4w">
     <h1>{title}</h1>
-    <CguContent components={anchorHeadingMDXComponents} />
+    {/* <CguContent components={anchorHeadingMDXComponents} /> */}
   </Container>
 );
 

@@ -39,3 +39,15 @@
 }
 
 /* === */
+
+svg.dsfr-svg {
+    --color: var(--artwork-major-blue-france);
+}
+
+svg.dsfr-svg-hover:hover {
+    --color: var(--artwork-major-blue-france-hover);
+}
+
+svg.dsfr-svg-active:active {
+    --color: var(--artwork-major-blue-france-active);
+}

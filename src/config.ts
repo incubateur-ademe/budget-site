@@ -1,14 +1,41 @@
+import { ensureApiEnvVar, ensureNextEnvVar } from "@/utils/os";
+import { isTruthy } from "@/utils/string";
+
 export const config = {
-  host: process.env.NEXT_PUBLIC_SITE_URL!,
-  name: "Carte Verte",
-  tagline: "La solution de paiement de l'ADEME qui récompense vos achats durables",
-  env: (process.env.CARTE_VERTE_ENV || "dev") as "dev" | "prod" | "staging",
+  host: ensureNextEnvVar(process.env.NEXT_PUBLIC_SITE_URL, "http://localhost:3000"),
+  name: "Budget Incubateur ADEME",
+  tagline: "Site web de gestion des budgets de l'Incbateur de l'ADEME",
+  env: ensureApiEnvVar<"dev" | "prod" | "staging">(process.env.APP_ENV, "dev"),
   matomo: {
-    siteId: process.env.NEXT_PUBLIC_MATOMO_SITE_ID!,
-    url: process.env.NEXT_PUBLIC_MATOMO_URL!,
+    url: ensureNextEnvVar(process.env.NEXT_PUBLIC_MATOMO_URL, ""),
+    siteId: ensureNextEnvVar(process.env.NEXT_PUBLIC_MATOMO_SITE_ID, ""),
   },
-  appVersion: process.env.NEXT_PUBLIC_APP_VERSION!,
-  appVersionCommit: process.env.NEXT_PUBLIC_APP_VERSION_COMMIT!,
-  repositoryUrl: process.env.NEXT_PUBLIC_REPOSITORY_URL!,
-  formUrl: "https://tally.so/r/xxxx",
-};
+  appVersion: ensureNextEnvVar(process.env.NEXT_PUBLIC_APP_VERSION, "dev"),
+  appVersionCommit: ensureNextEnvVar(process.env.NEXT_PUBLIC_APP_VERSION_COMMIT, "<unknown>"),
+  repositoryUrl: ensureNextEnvVar(
+    process.env.NEXT_PUBLIC_REPOSITORY_URL,
+    "https://github.com/incubateur-ademe/budget-site",
+  ),
+  api: {
+    mailer: {
+      host: ensureApiEnvVar(process.env.MAILER_SMTP_HOST, "127.0.0.1"),
+      smtp: {
+        port: ensureApiEnvVar(process.env.MAILER_SMTP_PORT, Number, 1025),
+        password: ensureApiEnvVar(process.env.MAILER_SMTP_PASSWORD, ""),
+        login: ensureApiEnvVar(process.env.MAILER_SMTP_LOGIN, ""),
+        ssl: ensureApiEnvVar(process.env.MAILER_SMTP_SSL, isTruthy, false),
+      },
+      from: ensureApiEnvVar(process.env.MAILER_FROM_EMAIL, "Bot Incubateur ADEME <bot@incubateur-ademe.beta.gouv.fr>"),
+    },
+    security: {
+      auth: {
+        secret: ensureApiEnvVar(process.env.SECURITY_JWT_SECRET, "secret"),
+      },
+    },
+    airtable: {
+      apiKey: ensureApiEnvVar(process.env.AIRTABLE_API_KEY, ""),
+      baseId: ensureApiEnvVar(process.env.AIRTABLE_BASE_ID, ""),
+      appBaseId: ensureApiEnvVar(process.env.AIRTABLE_APP_BASE_ID, ""),
+    },
+  },
+} as const;

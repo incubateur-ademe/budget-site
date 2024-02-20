@@ -1,6 +1,6 @@
 # Politiques et procédures de sécurité
 
-Ce document décrit les procédures de sécurité et les politiques générales pour le projet 'carte-verte.beta.gouv.fr'.
+Ce document décrit les procédures de sécurité et les politiques générales pour le projet 'budget.incubateur-ademe.beta.gouv.fr'.
 
   * [Signaler une faille](#signaler-une-faille)
   * [Politique de divulgation](#politique-de-divulgation)
@@ -8,8 +8,8 @@ Ce document décrit les procédures de sécurité et les politiques générales 
 
 ## Signaler une faille
 
-La communauté et l’équipe cœur de 'carte-verte.beta.gouv.fr' prennent au très au sérieux la sécurité de l’application.
-Signalez toute faille de sécurité en envoyant un mail à l’équipe carte-verte@beta.gouv.fr
+La communauté et l’équipe cœur de 'budget.incubateur-ademe.beta.gouv.fr' prennent au très au sérieux la sécurité de l’application.
+Signalez toute faille de sécurité en envoyant un mail à l’équipe accelerateurdelatransitionecologique@ademe.fr
 
 L’équipe accusera réception de votre mail dans les 72 heures. Après la réponse initiale à votre rapport, elle vous tiendra informé de la progression vers une correction et une annonce complète, et pourra vous demander des informations ou des conseils supplémentaires.
 

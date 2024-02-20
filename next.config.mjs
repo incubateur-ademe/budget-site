@@ -1,3 +1,5 @@
+// @ts-check
+
 import createMDX from "@next/mdx";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
@@ -14,7 +16,7 @@ const csp = {
   "connect-src": [
     "'self'",
     "https://*.gouv.fr",
-    process.env.CARTE_VERTE_ENV === "preprod" && "https://vercel.live",
+    process.env.APP_ENV === "preprod" && "https://vercel.live",
     process.env.NODE_ENV === "development" && "http://localhost",
   ],
   "font-src": ["'self'"],
@@ -23,8 +25,8 @@ const csp = {
   "script-src": [
     "'self'",
     "'unsafe-inline'",
-    "https://stats.beta.gouv.fr",
-    process.env.CARTE_VERTE_ENV === "preprod" && "https://vercel.live",
+    process.env.NEXT_PUBLIC_MATOMO_URL,
+    process.env.APP_ENV === "preprod" && "https://vercel.live",
     process.env.NODE_ENV === "development" && "'unsafe-eval' http://localhost",
   ],
   "style-src": ["'self'", "'unsafe-inline'"],
@@ -34,7 +36,7 @@ const csp = {
   "form-action": ["'self'", "https://*.gouv.fr"],
   "block-all-mixed-content": [],
   "upgrade-insecure-requests": [],
-  "frame-src": [process.env.CARTE_VERTE_ENV === "preprod" ? "https://vercel.live" : "'none'"],
+  "frame-src": [process.env.APP_ENV === "preprod" ? "https://vercel.live" : "'none'"],
 };
 
 const ContentSecurityPolicy = Object.entries(csp)

@@ -1,14 +1,10 @@
-import PolitiqueConfidentialiteCookiesContent from "@__content/politique-de-confidentialite/cookies.mdx";
-import PolitiqueConfidentialiteTraitementContent from "@__content/politique-de-confidentialite/traitement.mdx";
 import Table from "@codegouvfr/react-dsfr/Table";
 import { type Metadata } from "next";
 
 import { MdxLink } from "@/components/mdx/Link";
 import { Container } from "@/dsfr";
 import { AnchorLink } from "@/dsfr/client";
-import { anchorHeadingMDXComponents } from "@/mdx-components";
 
-import { FooterConsentManagementItem } from "../../consentManagement";
 import { sharedMetadata } from "../shared-metadata";
 
 const title = "Politique de confidentialité";
@@ -31,7 +27,7 @@ const PolitiqueConfidentialite = () => {
   return (
     <Container my="4w">
       <h1>{title}</h1>
-      <PolitiqueConfidentialiteTraitementContent components={anchorHeadingMDXComponents} />
+      {/* <PolitiqueConfidentialiteTraitementContent components={anchorHeadingMDXComponents} /> */}
       <AnchorLink anchor="sous-traitants" as="h2">
         Sous-traitants
       </AnchorLink>
@@ -54,7 +50,7 @@ const PolitiqueConfidentialite = () => {
           ],
         ]}
       />
-      <PolitiqueConfidentialiteCookiesContent
+      {/* <PolitiqueConfidentialiteCookiesContent
         components={{
           ...anchorHeadingMDXComponents,
           CookiesTable: () => (
@@ -75,7 +71,7 @@ const PolitiqueConfidentialite = () => {
           ),
           CookiesButton: () => <FooterConsentManagementItem />,
         }}
-      />
+      /> */}
     </Container>
   );
 };

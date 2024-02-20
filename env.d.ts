@@ -6,7 +6,67 @@ declare namespace NodeJS {
          * Dist: `dev`  
          * {@link [Local Env Dist](.env.development)}
          */
-        CARTE_VERTE_ENV?: string;
+        APP_ENV?: string;
+        /**
+         * No dist value.  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        AIRTABLE_API_KEY?: string;
+        /**
+         * No dist value.  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        AIRTABLE_BASE_ID?: string;
+        /**
+         * No dist value.  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        AIRTABLE_APP_BASE_ID?: string;
+        /**
+         * Dist: `false`  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        MAILER_ENABLE?: string;
+        /**
+         * Dist: `127.0.0.1`  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        MAILER_SMTP_HOST?: string;
+        /**
+         * Dist: `1025`  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        MAILER_SMTP_PORT?: string;
+        /**
+         * No dist value.  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        MAILER_SMTP_PASSWORD?: string;
+        /**
+         * No dist value.  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        MAILER_SMTP_LOGIN?: string;
+        /**
+         * Dist: `false`  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        MAILER_SMTP_SSL?: string;
+        /**
+         * Dist: `Bot Incubateur ADEME <bot@incubateur-ademe.beta.gouv.fr>`  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        MAILER_FROM_EMAIL?: string;
+        /**
+         * Dist: `sikretfordevonly`  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        SECURITY_JWT_SECRET?: string;
+        /**
+         * Dist: `HS256`  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        SECURITY_JWT_ALGORITHM?: string;
         /**
          * Dist: `1`  
          * {@link [Local Env Dist](.env.development)}
@@ -40,7 +100,19 @@ declare namespace NodeJS {
     }
 }
 declare type ProcessEnvCustomKeys = 
-    | 'CARTE_VERTE_ENV'
+    | 'APP_ENV'
+    | 'AIRTABLE_API_KEY'
+    | 'AIRTABLE_BASE_ID'
+    | 'AIRTABLE_APP_BASE_ID'
+    | 'MAILER_ENABLE'
+    | 'MAILER_SMTP_HOST'
+    | 'MAILER_SMTP_PORT'
+    | 'MAILER_SMTP_PASSWORD'
+    | 'MAILER_SMTP_LOGIN'
+    | 'MAILER_SMTP_SSL'
+    | 'MAILER_FROM_EMAIL'
+    | 'SECURITY_JWT_SECRET'
+    | 'SECURITY_JWT_ALGORITHM'
     | 'NEXT_PUBLIC_MATOMO_SITE_ID'
     | 'NEXT_PUBLIC_MATOMO_URL'
     | 'NEXT_PUBLIC_APP_VERSION'

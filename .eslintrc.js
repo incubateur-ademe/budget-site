@@ -1,3 +1,9 @@
+// @ts-check
+
+// import eslint from "@eslint/js";
+// import tseslint from "typescript-eslint";
+// import cwv from "eslint-config-next";
+
 const nextFiles = [
   "page",
   "head",
@@ -16,8 +22,9 @@ const nextFiles = [
   "robots",
 ].join("|");
 
+// TODO: switch to flat config
 /** @type {import("eslint").Linter.Config} */
-const config = {
+module.exports = {
   root: true,
   reportUnusedDisableDirectives: true,
   extends: [
@@ -211,5 +218,3 @@ const config = {
     },
   ],
 };
-
-module.exports = config;
