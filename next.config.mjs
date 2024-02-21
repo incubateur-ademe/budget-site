@@ -69,8 +69,13 @@ const config = {
       ? `https://github.com/${process.env.VERCEL_GIT_REPO_OWNER}/${process.env.VERCEL_GIT_REPO_SLUG}`
       : process.env.NEXT_PUBLIC_APP_REPOSITORY_URL ?? "no repository",
     NEXT_PUBLIC_SITE_URL: isDeployment
-      ? process.env.NEXT_PUBLIC_SITE_URL ?? `https://${process.env.VERCEL_URL}`
+      ? process.env.NEXT_PUBLIC_SITE_URL ?? `https://${process.env.VERCEL_BRANCH_URL}`
       : "http://localhost:3000",
+    NEXTAUTH_URL: `${
+      isDeployment
+        ? process.env.NEXT_PUBLIC_SITE_URL ?? `https://${process.env.VERCEL_BRANCH_URL}`
+        : "http://localhost:3000"
+    }/api/auth`,
   },
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   async headers() {
