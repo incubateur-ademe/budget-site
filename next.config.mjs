@@ -11,6 +11,27 @@ const { version } = packageJson;
 
 const isDeployment = !!process.env.VERCEL_URL;
 
+const env = {
+  NEXT_TELEMETRY_DISABLED: "1",
+  NEXT_PUBLIC_APP_VERSION: version,
+  NEXT_PUBLIC_APP_VERSION_COMMIT: isDeployment ? process.env.VERCEL_GIT_COMMIT_SHA : "dev",
+  NEXT_PUBLIC_REPOSITORY_URL: isDeployment
+    ? `https://github.com/${process.env.VERCEL_GIT_REPO_OWNER}/${process.env.VERCEL_GIT_REPO_SLUG}`
+    : process.env.NEXT_PUBLIC_APP_REPOSITORY_URL ?? "no repository",
+  NEXT_PUBLIC_SITE_URL: isDeployment
+    ? process.env.NEXT_PUBLIC_SITE_URL ?? `https://${process.env.VERCEL_BRANCH_URL}`
+    : "http://localhost:3000",
+  NEXTAUTH_URL: `${
+    isDeployment
+      ? process.env.NEXT_PUBLIC_SITE_URL ?? `https://${process.env.VERCEL_BRANCH_URL}`
+      : "http://localhost:3000"
+  }/api/auth`,
+};
+
+if (isDeployment) {
+  console.log("==== Incoming environment variables ====", { process: process.env, env });
+}
+
 const csp = {
   "default-src": ["'none'"],
   "connect-src": [
@@ -61,22 +82,7 @@ const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  env: {
-    NEXT_TELEMETRY_DISABLED: "1",
-    NEXT_PUBLIC_APP_VERSION: version,
-    NEXT_PUBLIC_APP_VERSION_COMMIT: isDeployment ? process.env.VERCEL_GIT_COMMIT_SHA : "dev",
-    NEXT_PUBLIC_REPOSITORY_URL: isDeployment
-      ? `https://github.com/${process.env.VERCEL_GIT_REPO_OWNER}/${process.env.VERCEL_GIT_REPO_SLUG}`
-      : process.env.NEXT_PUBLIC_APP_REPOSITORY_URL ?? "no repository",
-    NEXT_PUBLIC_SITE_URL: isDeployment
-      ? process.env.NEXT_PUBLIC_SITE_URL ?? `https://${process.env.VERCEL_BRANCH_URL}`
-      : "http://localhost:3000",
-    NEXTAUTH_URL: `${
-      isDeployment
-        ? process.env.NEXT_PUBLIC_SITE_URL ?? `https://${process.env.VERCEL_BRANCH_URL}`
-        : "http://localhost:3000"
-    }/api/auth`,
-  },
+  env,
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   async headers() {
     return [
