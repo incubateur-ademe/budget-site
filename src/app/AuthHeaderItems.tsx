@@ -15,7 +15,7 @@ export const UserHeaderItem = () => {
           key="hqai-authenticated-user"
           quickAccessItem={{
             iconId: "fr-icon-account-fill",
-            text: `${session.data.user?.email}`,
+            text: `${session.data.user.name} / ${session.data.user.type}`,
             linkProps: {
               href: "#",
               onClick(e) {

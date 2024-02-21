@@ -1,38 +1,37 @@
 import { type Adapter, type AdapterUser, type VerificationToken } from "@auth/core/adapters";
 
-import { config } from "@/config";
-import { airtable } from "@/lib/airtable/client";
+import {
+  authenticatorTable,
+  autreContactTable,
+  membreTable,
+  startupTable,
+  verificationTokenTable,
+} from "@/lib/airtable/client";
 
 type SentVerificationToken = Omit<VerificationToken, "expires">;
 
 const noopAdapater: Adapter = {
   createUser(user) {
-    console.log("createUser", user);
     return { ...user, id: user.email };
   },
 
   getUser(_) {
-    console.log("getUser", _);
     return null;
   },
 
   getUserByAccount(_) {
-    console.log("getUserByAccount", _);
     return null;
   },
 
   updateUser(user) {
-    console.log("updateUser", user);
     return user as AdapterUser;
   },
 
   linkAccount(_) {
-    console.log("linkAccount", _);
     return _;
   },
 
   createSession(session) {
-    console.log("createSession", session);
     return session;
   },
 
@@ -48,74 +47,37 @@ const noopAdapater: Adapter = {
   },
 
   getAccount(_) {
-    console.log("getAccount", _);
     return null;
   },
-};
-
-type VerificationTokenModel = {
-  created_at: number;
-  expires: number;
-  identifier: string;
-  token: string;
-};
-
-type AuthenticatorModel = {
-  counter: number;
-  credentialBackedUp: boolean;
-  credentialDeviceType: string;
-  credentialID: string;
-  credentialPublicKey: string;
-  providerAccountId: string;
-  transports?: string;
-  userId: string;
-};
-
-type MembreModel = {
-  Actif: boolean;
-  Email: string;
-  Nom: string;
-  Startups: string[];
-};
-
-type AutreContactModel = {
-  Email: string;
-  Nom: string;
-  Rôle: string;
-  Startups: string[];
 };
 
 const OLD_DATE = new Date("1970-01-01");
 
 declare module "@auth/core/adapters" {
   export interface AdapterUser {
-    startups: string[];
+    startups: Array<{ id: string; name: string }>;
     type: "Gestionnaire" | "Membre";
   }
 }
 
 export const AirtableAdapter = (): Adapter => {
-  const appBase = airtable.base(config.api.airtable.appBaseId);
-  const base = airtable.base(config.api.airtable.baseId);
-
-  const verificationTokenTable = appBase.table<VerificationTokenModel>("VerificationToken");
-  const authenticatorTable = appBase.table<AuthenticatorModel>("Authenticator");
-
-  const membreTable = base.table<MembreModel>("Membre");
-  const autreContactTable = base.table<AutreContactModel>("Autre Contact");
-
   return {
     ...noopAdapater,
     async getUserByEmail(email) {
       const foundMembre = (await membreTable.select({ filterByFormula: `{Email} = "${email}"` }).firstPage())[0];
 
       if (foundMembre && foundMembre.fields.Actif) {
+        const startups = await Promise.all(
+          foundMembre.fields["Startup Actuelle"].map((startupId: string) =>
+            startupTable.find(startupId).then(startup => ({ id: startup.id, name: startup.fields.Nom })),
+          ),
+        );
         return {
           email: foundMembre.fields.Email,
           name: foundMembre.fields.Nom,
           emailVerified: OLD_DATE,
           id: foundMembre.id,
-          startups: foundMembre.fields.Startups,
+          startups,
           type: "Membre",
         };
       }
@@ -125,12 +87,17 @@ export const AirtableAdapter = (): Adapter => {
       )[0];
 
       if (foundAutreContact) {
+        const startups = await Promise.all(
+          foundAutreContact.fields.Startups.map((startupId: string) =>
+            startupTable.find(startupId).then(startup => ({ id: startup.id, name: startup.fields.Nom })),
+          ),
+        );
         return {
           email: foundAutreContact.fields.Email,
           name: foundAutreContact.fields.Nom,
           emailVerified: OLD_DATE,
           id: foundAutreContact.id,
-          startups: foundAutreContact.fields.Startups,
+          startups,
           type: foundAutreContact.fields.Rôle as AdapterUser["type"],
         };
       }
@@ -177,7 +144,9 @@ export const AirtableAdapter = (): Adapter => {
     async createAuthenticator(authenticator) {
       await authenticatorTable.create([
         {
-          fields: authenticator,
+          fields: {
+            ...authenticator,
+          },
         },
       ]);
       return authenticator;

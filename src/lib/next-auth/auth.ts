@@ -6,6 +6,22 @@ import { config } from "@/config";
 
 import { AirtableAdapter } from "./db/AirtableAdapter";
 
+declare module "next-auth" {
+  interface Account {
+    data: AdapterUser;
+  }
+
+  interface Session {
+    user: AdapterUser;
+  }
+}
+
+declare module "@auth/core/jwt" {
+  interface JWT {
+    user: AdapterUser;
+  }
+}
+
 export const {
   auth,
   handlers: { GET, POST },
@@ -36,7 +52,6 @@ export const {
   ],
   callbacks: {
     signIn({ user, account }) {
-      console.log("account?.provider", account?.provider);
       if (account?.provider !== "nodemailer") {
         return false;
       }
@@ -44,7 +59,19 @@ export const {
       if (!(user as AdapterUser).emailVerified || !user.name) {
         return false;
       }
+
+      account.data = user as AdapterUser;
       return true;
+    },
+    jwt({ token, account, trigger }) {
+      if (trigger === "signIn" && account) {
+        token = { ...token, user: account.data };
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user = token.user;
+      return session;
     },
   },
 });

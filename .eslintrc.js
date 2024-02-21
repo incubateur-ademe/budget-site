@@ -36,7 +36,6 @@ module.exports = {
     "prettier",
     // disable conflicting rules with plugin (not config!)
     "plugin:prettier/recommended",
-    "plugin:jsx-a11y/recommended",
   ],
   plugins: ["prettier", "unused-imports", "simple-import-sort", "lodash"],
   ignorePatterns: ["!**/.*.js?(x)", "node_modules"],
@@ -89,7 +88,6 @@ module.exports = {
         ],
       },
     ],
-    "jsx-a11y/anchor-is-valid": "off",
     "no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
