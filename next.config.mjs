@@ -78,6 +78,7 @@ const config = {
   },
   experimental: {
     typedRoutes: true,
+    serverMinification: false,
   },
   eslint: {
     ignoreDuringBuilds: true,
