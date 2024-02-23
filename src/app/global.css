@@ -51,3 +51,17 @@ svg.dsfr-svg-hover:hover {
 svg.dsfr-svg-active:active {
     --color: var(--artwork-major-blue-france-active);
 }
+
+
+/* === shine === */
+.shimmer {
+    mask: linear-gradient(-60deg, #000 30%, #0003, #000 70%) right/300% 100%;
+    background-repeat: no-repeat;
+    animation: 20s ease-out infinite shimmer;
+}
+
+@keyframes shimmer {
+    10%, 100% {
+        mask-position: left
+    }
+}

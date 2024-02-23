@@ -119,6 +119,9 @@ const RootLayout = ({ children }: PropsWithChildren) => {
                   }
                   serviceTagline={config.tagline}
                   operatorLogo={operatorLogo}
+                  classes={{
+                    operator: "shimmer",
+                  }}
                   quickAccessItems={[
                     <UserHeaderItem key="hqai-user" />,
                     <LoginLogoutHeaderItem key="hqai-loginlogout" />,
