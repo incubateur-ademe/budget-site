@@ -27,6 +27,17 @@ export const {
   handlers: { GET, POST },
 } = NextAuth({
   secret: config.api.security.auth.secret,
+  theme: {
+    logo: "/img/ademe-incubateur-logo.png",
+    brandColor: "#0053B3",
+    colorScheme: "auto",
+  },
+  pages: {
+    signIn: "/login",
+    signOut: "/logout",
+    error: "/login/error",
+    verifyRequest: "/login/verify-request",
+  },
   session: {
     strategy: "jwt",
   },
@@ -46,13 +57,14 @@ export const {
       },
       from: config.api.mailer.from,
     }),
+    // WebAuthn,
     // Passkey({
     //   registrationOptions: {},
     // }),
   ],
   callbacks: {
     signIn({ user, account }) {
-      if (account?.provider !== "nodemailer") {
+      if (account?.provider !== "nodemailer" && account?.provider !== "webauthn") {
         return false;
       }
 

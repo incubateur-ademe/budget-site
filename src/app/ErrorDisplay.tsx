@@ -6,7 +6,7 @@ import { type ReactNode } from "react";
 
 import { Box, Container, Grid, GridCol } from "@/dsfr";
 
-const errors = {
+export const errors = {
   "404": {
     title: "Page non trouvée",
     headline: "La page que vous cherchez est introuvable. Excusez-nous pour la gène occasionnée.",
@@ -32,6 +32,16 @@ const errors = {
     title: "Maintenance",
     headline: "Le service est actuellement en maintenance.",
     body: <>Nous travaillons pour le rétablir le plus rapidement possible.</>,
+  },
+  "login-AuthorizedCallbackError": {
+    title: "Erreur de connexion",
+    headline: "Connexion non autorisée.",
+    body: (
+      <>
+        L'email avec lequel vous avez tenté de vous connecter n'est pas autorisé. Si vous pensez qu'il s'agit d'une
+        erreur, veuillez contacter l'équipe transverse.
+      </>
+    ),
   },
 };
 

@@ -14,7 +14,7 @@ export const sharedMetadata: Metadata = {
     siteName: config.name,
     images: [
       {
-        url: new URL(`/img/hero.svg`, config.host),
+        url: new URL(`/img/ademe-incubateur-logo.png`, config.host),
         alt: config.name,
       },
     ],

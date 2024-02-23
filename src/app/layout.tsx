@@ -1,4 +1,5 @@
 import "./global.css";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import { fr } from "@codegouvfr/react-dsfr";
 import { Badge } from "@codegouvfr/react-dsfr/Badge";
