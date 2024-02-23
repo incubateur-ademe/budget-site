@@ -83,8 +83,8 @@ const RootLayout = ({ children }: PropsWithChildren) => {
         <SessionProvider refetchOnWindowFocus>
           <DsfrProvider lang="fr">
             <SkeletonTheme
-              baseColor="var(--background-contrast-grey)"
-              highlightColor="var(--background-contrast-grey-active)"
+              baseColor={fr.colors.decisions.background.contrast.grey.default}
+              highlightColor={fr.colors.decisions.background.contrast.grey.active}
               borderRadius="0.25rem"
               duration={2}
             >

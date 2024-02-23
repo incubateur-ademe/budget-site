@@ -125,7 +125,7 @@ export const AirtableAdapter = (): Adapter => {
     async useVerificationToken({ identifier, token }: SentVerificationToken): Promise<VerificationToken | null> {
       const foundToken = await verificationTokenTable
         .select({
-          filterByFormula: `{identifier} = "${identifier}"`,
+          filterByFormula: `{token} = "${token}"`,
         })
         .firstPage();
 

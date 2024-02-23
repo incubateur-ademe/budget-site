@@ -55,9 +55,11 @@ const csp = {
   "frame-ancestors": ["'self'"],
   "base-uri": ["'self'", "https://*.gouv.fr"],
   "form-action": ["'self'", "https://*.gouv.fr"],
-  "block-all-mixed-content": [],
-  "upgrade-insecure-requests": [],
   "frame-src": [process.env.APP_ENV === "preprod" ? "https://vercel.live" : "'none'"],
+  ...(process.env.NODE_ENV !== "development" && {
+    "block-all-mixed-content": [],
+    "upgrade-insecure-requests": [],
+  }),
 };
 
 const ContentSecurityPolicy = Object.entries(csp)

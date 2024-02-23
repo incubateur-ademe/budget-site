@@ -1,26 +1,31 @@
 "use client";
 
+import { fr } from "@codegouvfr/react-dsfr";
 import ButtonsGroup from "@codegouvfr/react-dsfr/ButtonsGroup";
 import Input from "@codegouvfr/react-dsfr/Input";
 import { signIn } from "next-auth/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { PulseLoader } from "react-spinners";
 
 import { FormFieldset } from "@/dsfr";
 
 export const LoginForm = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async () => {
     await signIn("nodemailer", {
       email: passwordRef.current?.value,
       callbackUrl: "/",
     });
+    setIsLoading(false);
   };
 
   return (
     <form
       onSubmit={e => {
         e.preventDefault();
+        setIsLoading(true);
         void onSubmit();
       }}
     >
@@ -50,8 +55,13 @@ export const LoginForm = () => {
                 key="buttons-group"
                 buttons={[
                   {
-                    children: "Se connecter",
+                    children: isLoading ? (
+                      <PulseLoader size="1em" color={fr.colors.decisions.text.active.blueFrance.default} />
+                    ) : (
+                      "Se connecter"
+                    ),
                     type: "submit",
+                    disabled: isLoading,
                   },
                 ]}
               />,

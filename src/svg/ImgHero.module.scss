@@ -1,13 +1,9 @@
-svg#freepik_stories-audit:not(.animated) .animable {
+.freepik_stories-audit:not(.animated) .animable {
     opacity: 0;
 }
 
-svg#freepik_stories-audit.animated #freepik--icon-2--inject-43 {
-    animation: 1.5s Infinite linear floating;
-    animation-delay: 0s;
-}
-
-svg#freepik_stories-audit.animated #freepik--icon-1--inject-43 {
+.icon1,
+.icon2 {
     animation: 1.5s Infinite linear floating;
     animation-delay: 0s;
 }

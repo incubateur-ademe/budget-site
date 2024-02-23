@@ -1,0 +1,2 @@
+- passkey / webauthn https://github.com/nextauthjs/next-auth-webauthn/blob/main/components/login.tsx
+- refresh token https://github.com/nextauthjs/next-auth-refresh-token-example
