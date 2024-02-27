@@ -75,9 +75,7 @@ export const LoginLogoutHeaderItem = () => {
           quickAccessItem={{
             iconId: "fr-icon-lock-line",
             linkProps: {
-              href: {
-                pathname: "api/auth/signin",
-              },
+              href: "/login",
               className: fr.cx("fr-btn--secondary"),
             },
             text: "Se connecter",

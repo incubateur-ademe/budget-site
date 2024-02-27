@@ -2,6 +2,8 @@ import { ensureApiEnvVar, ensureNextEnvVar } from "@/utils/os";
 import { isTruthy } from "@/utils/string";
 
 export const config = {
+  /** First year of recorded activity */
+  firstDate: new Date(2024, 0, 1),
   host: ensureNextEnvVar(process.env.NEXT_PUBLIC_SITE_URL, "http://localhost:3000"),
   name: "Budget Incubateur ADEME",
   tagline: "Site web de gestion des budgets de l'Incbateur de l'ADEME",

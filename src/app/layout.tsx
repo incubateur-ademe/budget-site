@@ -25,6 +25,7 @@ import { FooterPersonalDataPolicyItem } from "../consentManagement";
 import { defaultColorScheme } from "../defaultColorScheme";
 import { StartDsfr } from "../StartDsfr";
 import { LoginLogoutHeaderItem, UserHeaderItem } from "./AuthHeaderItems";
+import { Navigation } from "./Navigation";
 import styles from "./root.module.scss";
 import { sharedMetadata } from "./shared-metadata";
 
@@ -103,6 +104,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
               />
               <div className={styles.app}>
                 <Header
+                  navigation={<Navigation />}
                   brandTop={<Brand />}
                   homeLinkProps={{
                     href: "/",

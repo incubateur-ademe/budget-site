@@ -17,3 +17,4 @@ export const authenticatorTable = appBase.table("Authenticator");
 export const membreTable = budgetBase.table("Membre");
 export const autreContactTable = budgetBase.table("Autre Contact");
 export const startupTable = budgetBase.table("Startup");
+export const craTable = budgetBase.table("CRA");

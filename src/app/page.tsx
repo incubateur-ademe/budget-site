@@ -1,9 +1,9 @@
 import { cx } from "@codegouvfr/react-dsfr/tools/cx";
 import { type Metadata } from "next";
 
+import { ImgHero } from "@/components/img/ImgHero";
 import { config } from "@/config";
 import { Box, Container, Grid, GridCol } from "@/dsfr";
-import { ImgHero } from "@/svg/ImgHero";
 
 import { ErrorDisplay } from "./ErrorDisplay";
 import styles from "./index.module.scss";

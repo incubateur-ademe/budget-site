@@ -141,6 +141,7 @@ module.exports = {
       },
       plugins: ["@typescript-eslint", "typescript-sort-keys"],
       rules: {
+        "import/named": "off",
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/array-type": [
           "error",

@@ -7,6 +7,7 @@ export interface BaseMapping {
   };
   budget: {
     "Autre Contact": AutreContactModel;
+    CRA: CRAModel;
     Membre: MembreModel;
     Startup: StartupModel;
   };
@@ -25,11 +26,20 @@ export interface AutreContactModel extends FieldSet {
   Email: string;
   Nom: string;
   Rôle: string;
-  Startups: string[];
+  Startup: string[];
 }
 
 export interface StartupModel extends FieldSet {
   Nom: string;
+}
+
+export interface CRAModel extends FieldSet {
+  Date: string;
+  ID: string;
+  "Jours travaillés": number;
+  Membre: string[];
+  Startup: string[];
+  _YearMonth: string;
 }
 
 // App Base

@@ -88,7 +88,7 @@ export const AirtableAdapter = (): Adapter => {
 
       if (foundAutreContact) {
         const startups = await Promise.all(
-          foundAutreContact.fields.Startups.map((startupId: string) =>
+          foundAutreContact.fields.Startup.map((startupId: string) =>
             startupTable.find(startupId).then(startup => ({ id: startup.id, name: startup.fields.Nom })),
           ),
         );
