@@ -1,4 +1,4 @@
-import "react-calendar/dist/Calendar.css";
+import "./Calendar.scss";
 
 import { CenteredContainer } from "@/dsfr";
 

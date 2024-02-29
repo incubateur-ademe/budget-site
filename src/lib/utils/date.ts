@@ -1,5 +1,6 @@
-import { differenceInBusinessDays, setDefaultOptions } from "date-fns";
+import { differenceInBusinessDays, format, setDefaultOptions } from "date-fns";
 import { fr } from "date-fns/locale";
+import { capitalize } from "lodash";
 
 import { holidays } from "@/referentiels";
 
@@ -22,3 +23,5 @@ export const getWorkingDaysForMonth = (date: Date) => {
 
   return businessDaysWithoutHolidays;
 };
+
+export const capitalizedMonth = (date: Date) => capitalize(format(date, "MMMM"));

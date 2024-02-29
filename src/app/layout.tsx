@@ -86,7 +86,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
             <SkeletonTheme
               baseColor={fr.colors.decisions.background.contrast.grey.default}
               highlightColor={fr.colors.decisions.background.contrast.grey.active}
-              borderRadius="0.25rem"
+              borderRadius={fr.spacing("1v")}
               duration={2}
             >
               {/* <ConsentBannerAndConsentManagement /> */}
