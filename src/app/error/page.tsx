@@ -1,4 +1,4 @@
-import { ErrorDisplay, errors } from "../ErrorDisplay";
+import { systemCodes, SystemMessageDisplay } from "../SystemMessageDisplay";
 
 interface ErrorPageProps {
   searchParams: {
@@ -7,9 +7,7 @@ interface ErrorPageProps {
 }
 
 const Error = ({ searchParams: { source } }: ErrorPageProps) => (
-  <>
-    <ErrorDisplay code={source && source in errors ? source : "500"} />
-  </>
+  <SystemMessageDisplay code={source && source in systemCodes ? source : "500"} />
 );
 
 export default Error;

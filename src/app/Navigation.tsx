@@ -26,17 +26,11 @@ export const Navigation = () => {
         ...(isMembre
           ? [
               {
-                text: "Membre",
-                isActive: segment === "membre",
-                menuLinks: [
-                  {
-                    text: "CRAs",
-                    linkProps: {
-                      href: "/membre/cra",
-                    },
-                    isActive: segments.includes("membre") && segments.includes("cra"),
-                  },
-                ],
+                text: "Gérer vos CRA",
+                isActive: segment === "cra",
+                linkProps: {
+                  href: "/cra",
+                },
               } satisfies MainNavigationProps["items"][number],
             ]
           : []),

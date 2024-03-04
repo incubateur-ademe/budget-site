@@ -1,3 +1,5 @@
+"use client";
+
 import { type SuspenseProps, useEffect, useState } from "react";
 
 export const ClientOnly = ({ children, fallback }: SuspenseProps) => {

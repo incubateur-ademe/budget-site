@@ -1,12 +1,11 @@
 "use client";
 
-import { fr } from "@codegouvfr/react-dsfr";
 import ButtonsGroup from "@codegouvfr/react-dsfr/ButtonsGroup";
 import Input from "@codegouvfr/react-dsfr/Input";
 import { signIn } from "next-auth/react";
 import { useRef, useState } from "react";
-import { PulseLoader } from "react-spinners";
 
+import { Loader } from "@/components/utils/Loader";
 import { FormFieldset } from "@/dsfr";
 
 export const LoginForm = () => {
@@ -55,11 +54,7 @@ export const LoginForm = () => {
                 key="buttons-group"
                 buttons={[
                   {
-                    children: isLoading ? (
-                      <PulseLoader size="1em" color={fr.colors.decisions.text.active.blueFrance.default} />
-                    ) : (
-                      "Se connecter"
-                    ),
+                    children: <Loader loading={isLoading} text="Se connecter" />,
                     type: "submit",
                     disabled: isLoading,
                   },

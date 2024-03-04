@@ -1,17 +1,15 @@
 import Alert from "@codegouvfr/react-dsfr/Alert";
-import Button from "@codegouvfr/react-dsfr/Button";
-import Input from "@codegouvfr/react-dsfr/Input";
-import Select from "@codegouvfr/react-dsfr/Select";
-import { format } from "date-fns";
-import { capitalize } from "lodash";
 import { z } from "zod";
 
+import { ClientOnly } from "@/components/utils/ClientOnly";
 import { config } from "@/config";
-import { Box, CenteredContainer } from "@/dsfr";
+import { CenteredContainer } from "@/dsfr";
+import { craTable, membreTable } from "@/lib/airtable/client";
+import { craMapper } from "@/lib/mapper/CRA";
 import { auth } from "@/lib/next-auth/auth";
-import { getWorkingDaysForMonth } from "@/utils/date";
+import { capitalizedMonth, getWorkingDaysForMonth } from "@/utils/date";
 
-import { saveCRA } from "./actions";
+import { CRAForm } from "./Form";
 
 const yearMonthSchema = z
   .string()
@@ -43,12 +41,12 @@ const yearMonthSchema = z
 
 interface CRAPageProps {
   params: {
-    month: string;
+    yearMonth: string;
   };
 }
 
-const CRAPage = async ({ params: { month } }: CRAPageProps) => {
-  const parsedMonth = yearMonthSchema.safeParse(month);
+const CRAPage = async ({ params: { yearMonth } }: CRAPageProps) => {
+  const parsedMonth = yearMonthSchema.safeParse(yearMonth);
 
   if (!parsedMonth.success) {
     return (
@@ -65,45 +63,36 @@ const CRAPage = async ({ params: { month } }: CRAPageProps) => {
     return null;
   }
 
+  const userID = session.user.id;
+  const user = await membreTable.find(userID);
+
+  if (!user) {
+    return null;
+  }
+
+  const craFound = await craTable
+    .select({
+      filterByFormula: `AND({_MembreID} = "${userID}", {_YearMonth} = "${yearMonth}")`,
+    })
+    .all();
+
+  const defaultTJM = user.fields.TJM ?? 0;
   const businessDaysWithoutHolidays = getWorkingDaysForMonth(monthDate);
 
   return (
     <CenteredContainer py="4w">
-      <h1>Compte Rendu d'Activité pour {capitalize(format(monthDate, "MMMM yyyy"))}</h1>
-      <Box>
-        <form action={saveCRA}>
-          <Input
-            label="Nombre de jours travaillés"
-            hintText={
-              <>
-                Max : <strong>{businessDaysWithoutHolidays}</strong>, jours fériés exclus
-              </>
-            }
-            nativeInputProps={{
-              name: "workingDays",
-              defaultValue: businessDaysWithoutHolidays,
-              type: "number",
-              min: 0,
-              max: businessDaysWithoutHolidays,
-              step: 0.5,
-            }}
-          />
-          <Select
-            label="Startup"
-            nativeSelectProps={{
-              name: "startupId",
-              defaultValue: session.user.startups[0].id,
-            }}
-          >
-            {session.user.startups.map(startup => (
-              <option key={startup.id} value={startup.id}>
-                {startup.name}
-              </option>
-            ))}
-          </Select>
-          <Button type="submit">Déclarer</Button>
-        </form>
-      </Box>
+      <h3>
+        Votre compte-rendu d'activité pour {capitalizedMonth(monthDate)} {monthDate.getFullYear()}
+      </h3>
+      <p>Déclarez vos temps pour chaque Startup de l'Incubateur que vous accompagnez.</p>
+      <ClientOnly>
+        <CRAForm
+          maxDays={businessDaysWithoutHolidays}
+          currentCras={craFound.map(craMapper)}
+          defaultTJM={defaultTJM}
+          startups={session.user.startups}
+        />
+      </ClientOnly>
     </CenteredContainer>
   );
 };

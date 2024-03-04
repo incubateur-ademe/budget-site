@@ -5,9 +5,9 @@ import { ImgHero } from "@/components/img/ImgHero";
 import { config } from "@/config";
 import { Box, Container, Grid, GridCol } from "@/dsfr";
 
-import { ErrorDisplay } from "./ErrorDisplay";
 import styles from "./index.module.scss";
 import { sharedMetadata } from "./shared-metadata";
+import { SystemMessageDisplay } from "./SystemMessageDisplay";
 
 const url = "/";
 
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 const Home = () => {
   if (config.env === "prod") {
-    return <ErrorDisplay code="construction" noRedirect />;
+    return <SystemMessageDisplay code="construction" noRedirect />;
   }
 
   return (

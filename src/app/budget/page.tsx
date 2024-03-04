@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 
-import { ErrorDisplay } from "../ErrorDisplay";
 import { sharedMetadata } from "../shared-metadata";
+import { SystemMessageDisplay } from "../SystemMessageDisplay";
 
 const title = "Budget";
 const url = "/budget";
@@ -19,11 +19,12 @@ export const metadata: Metadata = {
 };
 
 const Budget = () => (
-  <ErrorDisplay
+  <SystemMessageDisplay
     code="custom"
     title="Budget non disponible"
     headline="Désolé, cette page est toujours en construction. Les données ne sont donc pas accessibles pour l'instant."
     body="Nous travaillons activement pour vous donner de la visibilité le plus rapidement possible."
+    pictogram="inProgress"
   />
 );
 

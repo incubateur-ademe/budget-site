@@ -54,28 +54,29 @@ module.exports = {
         forbid: [">", "}"],
       },
     ],
-    "react/forbid-component-props": [
-      "error",
-      {
-        forbid: [
-          {
-            propName: "style",
-            message: "Utiliser className à la place de style (react-dsfr ou global.css).",
-          },
-        ],
-      },
-    ],
-    "react/forbid-dom-props": [
-      "error",
-      {
-        forbid: [
-          {
-            propName: "style",
-            message: "Utiliser className à la place de style (react-dsfr ou global.css).",
-          },
-        ],
-      },
-    ],
+    // Enable only for CSP inline-style
+    // "react/forbid-component-props": [
+    //   "error",
+    //   {
+    //     forbid: [
+    //       {
+    //         propName: "style",
+    //         message: "Utiliser className à la place de style (react-dsfr ou global.css).",
+    //       },
+    //     ],
+    //   },
+    // ],
+    // "react/forbid-dom-props": [
+    //   "error",
+    //   {
+    //     forbid: [
+    //       {
+    //         propName: "style",
+    //         message: "Utiliser className à la place de style (react-dsfr ou global.css).",
+    //       },
+    //     ],
+    //   },
+    // ],
     "no-restricted-imports": [
       "error",
       {

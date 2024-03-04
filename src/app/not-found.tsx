@@ -1,9 +1,5 @@
-import { ErrorDisplay } from "./ErrorDisplay";
+import { SystemMessageDisplay } from "./SystemMessageDisplay";
 
-const NotFound = () => (
-  <>
-    <ErrorDisplay code="404" />
-  </>
-);
+const NotFound = () => <SystemMessageDisplay code="404" />;
 
 export default NotFound;

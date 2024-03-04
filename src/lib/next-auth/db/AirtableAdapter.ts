@@ -68,7 +68,10 @@ export const AirtableAdapter = (): Adapter => {
 
       if (foundMembre && foundMembre.fields.Actif) {
         const startups = await Promise.all(
-          foundMembre.fields["Startup Actuelle"].map((startupId: string) =>
+          [
+            ...(foundMembre.fields["Startups Actuelles"] ?? []),
+            ...(foundMembre.fields["Anciennes Startups"] ?? []),
+          ].map((startupId: string) =>
             startupTable.find(startupId).then(startup => ({ id: startup.id, name: startup.fields.Nom })),
           ),
         );

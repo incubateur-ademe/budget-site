@@ -17,9 +17,11 @@ export interface BaseMapping {
 
 export interface MembreModel extends FieldSet {
   Actif: boolean;
+  "Anciennes Startups"?: string[];
   Email: string;
   Nom: string;
-  "Startup Actuelle": string[];
+  "Startups Actuelles"?: string[];
+  TJM: number;
 }
 
 export interface AutreContactModel extends FieldSet {
@@ -34,11 +36,18 @@ export interface StartupModel extends FieldSet {
 }
 
 export interface CRAModel extends FieldSet {
-  Date: string;
+  "Commentaire intra": string;
+  "Commentaire membre": string;
+  Created: string;
+  "Date Mois": string;
   ID: string;
   "Jours travaillés": number;
-  Membre: string[];
-  Startup: string[];
+  "Last Modified": string;
+  Membre: [string];
+  Startup: [string];
+  Status: "À compléter" | "À valider" | "Validé";
+  TJM: number;
+  _MembreID: [string];
   _YearMonth: string;
 }
 
