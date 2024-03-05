@@ -7,7 +7,6 @@ import { Box, Container, Grid, GridCol } from "@/dsfr";
 
 import styles from "./index.module.scss";
 import { sharedMetadata } from "./shared-metadata";
-import { SystemMessageDisplay } from "./SystemMessageDisplay";
 
 const url = "/";
 
@@ -23,26 +22,18 @@ export const metadata: Metadata = {
 };
 
 const Home = () => {
-  if (config.env === "prod") {
-    return <SystemMessageDisplay code="construction" noRedirect />;
-  }
-
-  return (
-    <>
-      <Box as="section" pb="4w" pt="9w" className={cx(styles.hero)}>
-        <Container>
-          <Grid haveGutters>
-            <GridCol lg={7} className="fr-my-auto">
-              <h1>{config.name}</h1>
-              <p>{config.tagline}</p>
-            </GridCol>
-            <GridCol md={6} lg={5} className="fr-mx-auto">
-              <ImgHero />
-            </GridCol>
-          </Grid>
-        </Container>
-      </Box>
-    </>
-  );
+  <Box as="section" pb="4w" pt="9w" className={cx(styles.hero)}>
+    <Container>
+      <Grid haveGutters>
+        <GridCol lg={7} className="fr-my-auto">
+          <h1>{config.name}</h1>
+          <p>{config.tagline}</p>
+        </GridCol>
+        <GridCol md={6} lg={5} className="fr-mx-auto">
+          <ImgHero />
+        </GridCol>
+      </Grid>
+    </Container>
+  </Box>;
 };
 export default Home;

@@ -8,6 +8,11 @@ declare namespace NodeJS {
          */
         APP_ENV?: string;
         /**
+         * Dist: `false`  
+         * {@link [Local Env Dist](.env.development)}
+         */
+        MAINTENANCE_MODE?: string;
+        /**
          * No dist value.  
          * {@link [Local Env Dist](.env.development)}
          */
@@ -101,6 +106,7 @@ declare namespace NodeJS {
 }
 declare type ProcessEnvCustomKeys = 
     | 'APP_ENV'
+    | 'MAINTENANCE_MODE'
     | 'AIRTABLE_API_KEY'
     | 'AIRTABLE_BASE_ID'
     | 'AIRTABLE_APP_BASE_ID'

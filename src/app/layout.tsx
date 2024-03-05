@@ -28,6 +28,7 @@ import { LoginLogoutHeaderItem, UserHeaderItem } from "./AuthHeaderItems";
 import { Navigation } from "./Navigation";
 import styles from "./root.module.scss";
 import { sharedMetadata } from "./shared-metadata";
+import { SystemMessageDisplay } from "./SystemMessageDisplay";
 
 const contentId = "content";
 const footerId = "footer";
@@ -104,7 +105,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
               />
               <div className={styles.app}>
                 <Header
-                  navigation={<Navigation />}
+                  navigation={config.maintenance ? null : <Navigation />}
                   brandTop={<Brand />}
                   homeLinkProps={{
                     href: "/",
@@ -117,6 +118,11 @@ const RootLayout = ({ children }: PropsWithChildren) => {
                       <Badge as="span" noIcon severity="success">
                         Beta
                       </Badge>
+                      {config.maintenance && (
+                        <Badge as="span" noIcon severity="warning">
+                          Maintenance
+                        </Badge>
+                      )}
                     </>
                   }
                   serviceTagline={config.tagline}
@@ -124,13 +130,23 @@ const RootLayout = ({ children }: PropsWithChildren) => {
                   classes={{
                     operator: "shimmer",
                   }}
-                  quickAccessItems={[
-                    <UserHeaderItem key="hqai-user" />,
-                    <LoginLogoutHeaderItem key="hqai-loginlogout" />,
-                  ].filter(Boolean)}
+                  quickAccessItems={
+                    config.maintenance
+                      ? []
+                      : [<UserHeaderItem key="hqai-user" />, <LoginLogoutHeaderItem key="hqai-loginlogout" />].filter(
+                          Boolean,
+                        )
+                  }
                 />
                 <main role="main" id={contentId} className={styles.content}>
-                  {children}
+                  {config.env === "prod" ? (
+                    // TODO: disable when site is ready
+                    <SystemMessageDisplay code="construction" noRedirect />
+                  ) : config.maintenance ? (
+                    <SystemMessageDisplay code="maintenance" noRedirect />
+                  ) : (
+                    children
+                  )}
                 </main>
                 <Footer
                   id={footerId}
