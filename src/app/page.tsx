@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
 };
 
-const Home = () => {
+const Home = () => (
   <Box as="section" pb="4w" pt="9w" className={cx(styles.hero)}>
     <Container>
       <Grid haveGutters>
@@ -34,6 +34,7 @@ const Home = () => {
         </GridCol>
       </Grid>
     </Container>
-  </Box>;
-};
+  </Box>
+);
+
 export default Home;
