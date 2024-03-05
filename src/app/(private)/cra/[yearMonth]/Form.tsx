@@ -105,7 +105,7 @@ export const CRAForm = ({ maxDays, startups, currentCras, defaultTJM }: CRAFormP
       setEditModes(currentCras.map(() => false));
     } else {
       appendCRA({ startup: startups[0].id, tjm: defaultTJM ?? 0, days: 0 });
-      setEditModes([false]);
+      setEditModes([true]);
     }
     reset({}, { keepValues: true });
   }, [replaceCRA, currentCras, appendCRA, defaultTJM, startups, getValues, reset]);
@@ -118,7 +118,7 @@ export const CRAForm = ({ maxDays, startups, currentCras, defaultTJM }: CRAFormP
     !craFields.length ||
     !!errorMessage ||
     savePending ||
-    editModes.some(v => !v);
+    editModes.every(v => !v);
 
   const onSubmit = async (data: FormType) => {
     if (saveDisabled) return;
@@ -290,7 +290,7 @@ export const CRAForm = ({ maxDays, startups, currentCras, defaultTJM }: CRAFormP
                 tjm: defaultTJM ?? 0,
                 days: 0,
               });
-              setEditModes([...editModes, false]);
+              setEditModes([...editModes, true]);
             }}
           >
             Ajouter un CRA

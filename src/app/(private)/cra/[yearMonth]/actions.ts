@@ -3,6 +3,7 @@
 import AirtableError from "airtable/lib/airtable_error";
 import { format } from "date-fns";
 import { partition } from "lodash";
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 
 import { craTable } from "@/lib/airtable/client";
@@ -103,5 +104,6 @@ export const saveCRAs = async (
     return { ok: false, error: "Erreur inconnue lors de la suppression." };
   }
 
+  revalidatePath(`/cra/${yearMonth}`);
   return { ok: true };
 };
