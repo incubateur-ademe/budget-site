@@ -10,9 +10,6 @@ export const Navigation = () => {
 
   const { data: session, status } = useSession();
 
-  const isLogged = status === "authenticated";
-  const isMembre = isLogged && session?.user.type === "Membre";
-
   return (
     <MainNavigation
       items={[
@@ -23,16 +20,41 @@ export const Navigation = () => {
           },
           isActive: !segment,
         },
-        ...(isMembre
-          ? [
-              {
-                text: "Gérer vos CRA",
-                isActive: segment === "cra",
-                linkProps: {
-                  href: "/cra",
-                },
-              } satisfies MainNavigationProps["items"][number],
-            ]
+        ...(status === "authenticated"
+          ? ((): MainNavigationProps.Item[] => {
+              switch (session.user.data.type) {
+                case "Membre":
+                  return [
+                    {
+                      text: "Gérer vos CRA",
+                      isActive: segments.includes("cra") && segments.includes("declaration"),
+                      linkProps: {
+                        href: "/cra/declaration",
+                      },
+                    },
+                  ];
+                case "Intra":
+                  return [
+                    {
+                      text: "Suivre les CRA",
+                      isActive: segments.includes("cra") && segments.includes("validation"),
+                      linkProps: {
+                        href: "/cra/validation",
+                      },
+                    },
+                    {
+                      text: "Demander un devis",
+                      isActive: segment === "cra",
+                      linkProps: {
+                        href: "#",
+                      },
+                    },
+                  ];
+                case "Gestionnaire":
+                default:
+                  return [];
+              }
+            })()
           : []),
       ]}
     />

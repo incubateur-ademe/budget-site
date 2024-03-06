@@ -63,7 +63,7 @@ export const CalendarCRA = ({ craList }: CalendarCRAProps) => {
       }}
       onClickMonth={date => {
         const month = format(date, "yyyy-MM");
-        router.push(`/cra/${month}`);
+        router.push(`/cra/declaration/${month}`);
       }}
     />
   );

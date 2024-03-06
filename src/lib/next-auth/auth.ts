@@ -8,7 +8,7 @@ import { AirtableAdapter } from "./db/AirtableAdapter";
 
 declare module "next-auth" {
   interface Account {
-    data: AdapterUser;
+    user: AdapterUser;
   }
 
   interface Session {
@@ -72,12 +72,12 @@ export const {
         return false;
       }
 
-      account.data = user as AdapterUser;
+      account.user = user as AdapterUser;
       return true;
     },
     jwt({ token, account, trigger }) {
       if (trigger === "signIn" && account) {
-        token = { ...token, user: account.data };
+        token = { ...token, user: account.user };
       }
       return token;
     },

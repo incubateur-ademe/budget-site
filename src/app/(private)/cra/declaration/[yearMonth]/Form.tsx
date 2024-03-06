@@ -9,7 +9,6 @@ import Select from "@codegouvfr/react-dsfr/Select";
 import { cx } from "@codegouvfr/react-dsfr/tools/cx";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { type AdapterUser } from "next-auth/adapters";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -20,6 +19,7 @@ import { Box, Grid, GridCol } from "@/dsfr";
 import { CountDisplay } from "@/dsfr/base/CountDisplay";
 import { RecapCard } from "@/dsfr/base/RecapCard";
 import { type CraDto } from "@/lib/dto";
+import { type UserData } from "@/lib/next-auth/UserData";
 import { useEffectOnce } from "@/utils/react";
 
 import { StatusBadge } from "../StatusBadge";
@@ -65,7 +65,7 @@ export interface CRAFormProps {
   currentCras: CraDto[];
   defaultTJM?: number;
   maxDays: number;
-  startups: AdapterUser["startups"];
+  startups: UserData["startups"];
 }
 
 export const CRAForm = ({ maxDays, startups, currentCras, defaultTJM }: CRAFormProps) => {
@@ -149,7 +149,7 @@ export const CRAForm = ({ maxDays, startups, currentCras, defaultTJM }: CRAFormP
     setSavePending(false);
 
     if (result.ok) {
-      router.push("/cra/confirmation");
+      router.push("/cra/declaration/confirmation");
     } else {
       setErrorMessage(result.error);
     }
@@ -315,7 +315,7 @@ export const CRAForm = ({ maxDays, startups, currentCras, defaultTJM }: CRAFormP
               iconPosition: "left",
               priority: "secondary",
               linkProps: {
-                href: "/cra",
+                href: "/cra/declaration",
               },
             },
             {
@@ -336,7 +336,7 @@ interface RecapProps {
   index: number;
   maxDays: number;
   onClickEdit: () => void;
-  startup: AdapterUser["startups"][number];
+  startup: UserData["startups"][number];
 }
 
 const Recap = ({ cra, maxDays, index, startup, onClickEdit: onClick }: RecapProps) => {

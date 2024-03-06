@@ -59,7 +59,7 @@ const CRAPage = async ({ params: { yearMonth } }: CRAPageProps) => {
   const monthDate = parsedMonth.data;
 
   const session = await auth();
-  if (!session?.user) {
+  if (!session?.user || session.user.data.type !== "Membre") {
     return null;
   }
 
@@ -90,7 +90,7 @@ const CRAPage = async ({ params: { yearMonth } }: CRAPageProps) => {
           maxDays={businessDaysWithoutHolidays}
           currentCras={craFound.map(craMapper)}
           defaultTJM={defaultTJM}
-          startups={session.user.startups}
+          startups={[...session.user.data.startups, ...session.user.data.oldStartups]}
         />
       </ClientOnly>
     </CenteredContainer>

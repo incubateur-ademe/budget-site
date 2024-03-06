@@ -8,6 +8,8 @@ import {
   verificationTokenTable,
 } from "@/lib/airtable/client";
 
+import { type UserData } from "../UserData";
+
 type SentVerificationToken = Omit<VerificationToken, "expires">;
 
 const noopAdapater: Adapter = {
@@ -55,57 +57,68 @@ const OLD_DATE = new Date("1970-01-01");
 
 declare module "@auth/core/adapters" {
   export interface AdapterUser {
-    startups: Array<{ id: string; name: string }>;
-    type: "Gestionnaire" | "Membre";
+    data: UserData;
   }
 }
+
+const startupMatcherPromise = (startupId: string) =>
+  startupTable.find(startupId).then(startup => ({ id: startup.id, name: startup.fields.Nom }));
 
 export const AirtableAdapter = (): Adapter => {
   return {
     ...noopAdapater,
     async getUserByEmail(email) {
+      let data: UserData;
+      let user: AdapterUser;
       const foundMembre = (await membreTable.select({ filterByFormula: `{Email} = "${email}"` }).firstPage())[0];
 
       if (foundMembre && foundMembre.fields.Actif) {
-        const startups = await Promise.all(
-          [
-            ...(foundMembre.fields["Startups Actuelles"] ?? []),
-            ...(foundMembre.fields["Anciennes Startups"] ?? []),
-          ].map((startupId: string) =>
-            startupTable.find(startupId).then(startup => ({ id: startup.id, name: startup.fields.Nom })),
-          ),
+        const startups = await Promise.all((foundMembre.fields["Startups Actuelles"] ?? []).map(startupMatcherPromise));
+        const oldStartups = await Promise.all(
+          (foundMembre.fields["Anciennes Startups"] ?? []).map(startupMatcherPromise),
         );
-        return {
+
+        data = foundMembre.fields.Rôle.includes("intrapreneur·e")
+          ? { type: "Intra", startups }
+          : {
+              type: "Membre",
+              startups,
+              oldStartups,
+              roles: foundMembre.fields.Rôle,
+              tjm: foundMembre.fields.TJM,
+            };
+        user = {
           email: foundMembre.fields.Email,
           name: foundMembre.fields.Nom,
           emailVerified: OLD_DATE,
           id: foundMembre.id,
-          startups,
-          type: "Membre",
+          data,
         };
+      } else {
+        const foundAutreContact = (
+          await autreContactTable.select({ filterByFormula: `{Email} = "${email}"` }).firstPage()
+        )[0];
+
+        if (foundAutreContact && foundAutreContact.fields.Rôle.includes("Gestionnaire")) {
+          const startups = await Promise.all(foundAutreContact.fields.Startup.map(startupMatcherPromise));
+
+          data = {
+            type: "Gestionnaire",
+            phone: foundAutreContact.fields.Email,
+            startups,
+          };
+
+          user = {
+            email: foundAutreContact.fields.Email,
+            name: foundAutreContact.fields.Nom,
+            emailVerified: OLD_DATE,
+            id: foundAutreContact.id,
+            data,
+          };
+        } else return null;
       }
 
-      const foundAutreContact = (
-        await autreContactTable.select({ filterByFormula: `{Email} = "${email}"` }).firstPage()
-      )[0];
-
-      if (foundAutreContact) {
-        const startups = await Promise.all(
-          foundAutreContact.fields.Startup.map((startupId: string) =>
-            startupTable.find(startupId).then(startup => ({ id: startup.id, name: startup.fields.Nom })),
-          ),
-        );
-        return {
-          email: foundAutreContact.fields.Email,
-          name: foundAutreContact.fields.Nom,
-          emailVerified: OLD_DATE,
-          id: foundAutreContact.id,
-          startups,
-          type: foundAutreContact.fields.Rôle as AdapterUser["type"],
-        };
-      }
-
-      return null;
+      return user;
     },
 
     async createVerificationToken(verificationToken: VerificationToken): Promise<VerificationToken | null | undefined> {

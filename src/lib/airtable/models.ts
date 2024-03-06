@@ -15,20 +15,43 @@ export interface BaseMapping {
 
 // Budget Base
 
+type MembreRole =
+  | "chargé·e de déploiement"
+  | "chargé·e de portefeuille"
+  | "Chargée d'accompagnement collectivités"
+  | "coach"
+  | "data analyst/engineer"
+  | "designer transverse incubateur"
+  | "designer"
+  | "développeur·euse"
+  | "expert·e métier"
+  | "Experte transition et planification écologique collectivités"
+  | "intrapreneur·e"
+  | "product owner / product manager"
+  | "rédactrice"
+  | "responsable incubateur"
+  | "responsable technique incubateur"
+  | "Spécialiste carbone";
+
 export interface MembreModel extends FieldSet {
   Actif: boolean;
   "Anciennes Startups"?: string[];
   Email: string;
+  "Intra - Startup"?: string[];
   Nom: string;
+  Rôle: MembreRole[];
   "Startups Actuelles"?: string[];
   TJM: number;
 }
 
+export type AutreContactRole = "Autre" | "Gestionnaire";
+
 export interface AutreContactModel extends FieldSet {
   Email: string;
   Nom: string;
-  Rôle: string;
+  Rôle: AutreContactRole[];
   Startup: string[];
+  Téléphone: string;
 }
 
 export interface StartupModel extends FieldSet {

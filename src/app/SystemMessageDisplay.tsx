@@ -1,6 +1,7 @@
 import ButtonsGroup from "@codegouvfr/react-dsfr/ButtonsGroup";
 import _artworkOvoidSvgUrl from "@codegouvfr/react-dsfr/dsfr/artwork/background/ovoid.svg";
 import artworkCalendarSvgUrl from "@codegouvfr/react-dsfr/dsfr/artwork/pictograms/digital/calendar.svg";
+import artworkSearchSvgUrl from "@codegouvfr/react-dsfr/dsfr/artwork/pictograms/digital/search.svg";
 import artworkPadlockSvgUrl from "@codegouvfr/react-dsfr/dsfr/artwork/pictograms/system/padlock.svg";
 import artworkTechnicalErrorSvgUrl from "@codegouvfr/react-dsfr/dsfr/artwork/pictograms/system/technical-error.svg";
 import { type StaticImageData } from "next/image";
@@ -17,6 +18,7 @@ const artworkMap = {
   inProgress: artworkInProgressSvgUrl as StaticImageData,
   padlock: artworkPadlockSvgUrl as StaticImageData,
   technicalError: artworkTechnicalErrorSvgUrl as StaticImageData,
+  search: artworkSearchSvgUrl as StaticImageData,
 };
 
 interface SystemCodeMap {
@@ -38,7 +40,7 @@ export const systemCodes = {
         disponible.
       </>
     ),
-    pictogram: artworkMap.technicalError,
+    pictogram: artworkMap.search,
   },
   "500": {
     title: "Erreur inattendue",

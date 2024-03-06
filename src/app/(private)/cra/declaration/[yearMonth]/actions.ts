@@ -104,6 +104,7 @@ export const saveCRAs = async (
     return { ok: false, error: "Erreur inconnue lors de la suppression." };
   }
 
-  revalidatePath(`/cra/${yearMonth}`);
+  revalidatePath(`/cra/declaration/${yearMonth}`);
+  revalidatePath(`/cra/validation/${yearMonth}`);
   return { ok: true };
 };
