@@ -21,6 +21,7 @@ import { RecapCard } from "@/dsfr/base/RecapCard";
 import { type CraDto } from "@/lib/dto";
 import { type UserData } from "@/lib/next-auth/UserData";
 import { useEffectOnce } from "@/utils/react";
+import { tjmSchema } from "@/utils/zod-schema";
 
 import { StatusBadge } from "../StatusBadge";
 import { saveCRAs } from "./actions";
@@ -34,7 +35,7 @@ export const craSchemaWithMax = (maxDays: number) =>
           internalId: z.string().optional(),
           date: z.date().optional(),
           startup: z.string().min(1, "Une startup doit être sélectionnée."),
-          tjm: z.number({ invalid_type_error: "Le TJM est obligatoire." }).nonnegative("Le TJM doit être positif."),
+          tjm: tjmSchema,
           days: z
             .number({ invalid_type_error: "Le nombre de jours doit au moins être de 0." })
             .nonnegative("Le nombre de jours doit au moins être de 0.")

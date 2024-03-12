@@ -1,4 +1,4 @@
-import { type FieldSet } from "airtable";
+import { type FieldSet } from "@lsagetlethias/node-airtable";
 
 export interface BaseMapping {
   app: {
@@ -9,6 +9,7 @@ export interface BaseMapping {
     "Autre Contact": AutreContactModel;
     CRA: CRAModel;
     Membre: MembreModel;
+    Mission: MissionModel;
     Startup: StartupModel;
   };
 }
@@ -61,17 +62,31 @@ export interface StartupModel extends FieldSet {
 export interface CRAModel extends FieldSet {
   "Commentaire intra": string;
   "Commentaire membre": string;
-  Created: string;
+  readonly Created: string;
   "Date Mois": string;
-  ID: string;
+  readonly ID: string;
   "Jours travaillés": number;
-  "Last Modified": string;
+  readonly "Last Modified": string;
+  readonly Membre: readonly [string];
+  Mission: [string];
+  readonly Startup: readonly [string];
+  Status: "À compléter" | "À valider" | "Validé";
+  readonly TJM: number;
+  readonly _MembreID: [string];
+  readonly _YearMonth: string;
+}
+
+export interface MissionModel extends FieldSet {
+  CRA: string[];
+  "Date début": string;
+  "Date fin": string;
+  readonly "Jours consommés": number;
+  readonly "Jours prévus": number;
   Membre: [string];
   Startup: [string];
-  Status: "À compléter" | "À valider" | "Validé";
   TJM: number;
-  _MembreID: [string];
-  _YearMonth: string;
+  "Temps passé": number;
+  readonly _MembreID: readonly [string];
 }
 
 // App Base

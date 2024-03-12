@@ -1,4 +1,4 @@
-import { type Base, type default as Airtable, type FieldSet, type Table } from "airtable";
+import { type Base, type default as Airtable, type FieldSet, type Table } from "@lsagetlethias/node-airtable";
 
 import { type BaseMapping } from "./models";
 
@@ -14,4 +14,12 @@ export interface CustomBase<TBaseName extends keyof BaseMapping> extends Omit<Ba
 
 export interface CustomAirtable extends Omit<Airtable, "base"> {
   base<TBaseName extends keyof BaseMapping>(baseId: string): CustomBase<TBaseName>;
+}
+
+declare module "@lsagetlethias/node-airtable" {
+  namespace Airtable {
+    export interface RegisterFetch {
+      fetch: typeof fetch;
+    }
+  }
 }

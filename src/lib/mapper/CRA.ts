@@ -1,10 +1,11 @@
-import { type Record } from "airtable";
+import { UTCDate } from "@date-fns/utc";
+import { type Record } from "@lsagetlethias/node-airtable";
 
 import { type CRAModel } from "../airtable/models";
 import { type CraDto } from "../dto";
 
 export const craMapper = (cra: Record<CRAModel>): CraDto => ({
-  date: new Date(cra.fields["Date Mois"]),
+  date: new UTCDate(cra.fields["Date Mois"]),
   id: cra.getId(),
   member: cra.fields._MembreID[0],
   startup: cra.fields.Startup[0],

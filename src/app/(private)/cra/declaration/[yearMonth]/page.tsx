@@ -1,10 +1,11 @@
 import Alert from "@codegouvfr/react-dsfr/Alert";
+import { endOfMonth, format, startOfMonth } from "date-fns";
 import { z } from "zod";
 
 import { ClientOnly } from "@/components/utils/ClientOnly";
 import { config } from "@/config";
 import { CenteredContainer } from "@/dsfr";
-import { craTable, membreTable } from "@/lib/airtable/client";
+import { craTable, membreTable, missionTable } from "@/lib/airtable/client";
 import { craMapper } from "@/lib/mapper/CRA";
 import { auth } from "@/lib/next-auth/auth";
 import { capitalizedMonth, getWorkingDaysForMonth } from "@/utils/date";
@@ -70,11 +71,32 @@ const CRAPage = async ({ params: { yearMonth } }: CRAPageProps) => {
     return null;
   }
 
-  const craFound = await craTable
+  const missionFound = await missionTable
     .select({
-      filterByFormula: `AND({_MembreID} = "${userID}", {_YearMonth} = "${yearMonth}")`,
+      filterByFormula: `AND({_MembreID} = "${userID}", {Date début} <= DATETIME_PARSE("${format(startOfMonth(monthDate), "yyyy-MM-dd")}"), {Date fin} >= DATETIME_PARSE("${format(endOfMonth(monthDate), "yyyy-MM-dd")}"))`,
     })
     .all();
+
+  const craFound = await craTable
+    .select(
+      {
+        filterByFormula: `AND({_MembreID} = "${userID}", {_YearMonth} = "${yearMonth}")`,
+      },
+      {
+        next: {
+          tags: [
+            "CRA",
+            `CRA:Membre:${userID}`,
+            `Membre:${userID}`,
+            `CRA:YearMonth:${yearMonth}`,
+            `CRA:Membre:${userID}:YearMonth:${yearMonth}`,
+          ],
+        },
+      },
+    )
+    .all();
+
+  console.log({ craFound });
 
   const defaultTJM = user.fields.TJM ?? 0;
   const businessDaysWithoutHolidays = getWorkingDaysForMonth(monthDate);

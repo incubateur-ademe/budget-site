@@ -1,16 +1,28 @@
 import { redirect } from "next/navigation";
-import { type PropsWithChildren } from "react";
+import { type PropsWithChildren, type ReactNode } from "react";
 
 import { auth } from "@/lib/next-auth/auth";
 
-const PrivateLayout = async ({ children }: PropsWithChildren) => {
+import { DrawerStoreProvider } from "./@drawer/DrawerStoreProvider";
+import { CustomDrawer } from "./CustomDrawer";
+
+interface PrivateLayoutProps {
+  drawer: ReactNode;
+}
+
+const PrivateLayout = async ({ children, drawer }: PropsWithChildren<PrivateLayoutProps>) => {
   const session = await auth();
 
   if (!session) {
     return redirect("/login");
   }
 
-  return <>{children}</>;
+  return (
+    <DrawerStoreProvider>
+      {children}
+      <CustomDrawer>{drawer}</CustomDrawer>
+    </DrawerStoreProvider>
+  );
 };
 
 export default PrivateLayout;

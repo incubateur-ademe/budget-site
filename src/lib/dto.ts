@@ -13,6 +13,19 @@ export interface CraDto {
   yearMonth: string;
 }
 
+export interface MissionDto {
+  consumedDays: number;
+  cra: string[];
+  endDate: Date;
+  id: string;
+  member: string;
+  plannedDays: number;
+  startDate: Date;
+  startup: string;
+  timeSpan: number;
+  tjm: number;
+}
+
 export interface MemberDto {
   active: boolean;
   currentStartup: string[];

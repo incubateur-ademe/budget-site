@@ -19,6 +19,7 @@ import { type PropsWithChildren } from "react";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 import { Brand } from "@/components/Brand";
+import { VaulBodyPatcher } from "@/components/utils/VaulBodyPatcher";
 import { config } from "@/config";
 
 import { FooterPersonalDataPolicyItem } from "../consentManagement";
@@ -81,6 +82,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
           doDisableFavicon
         />
       </head>
+      <VaulBodyPatcher />
       <body>
         <SessionProvider refetchOnWindowFocus>
           <DsfrProvider lang="fr">
@@ -103,7 +105,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
                   },
                 ]}
               />
-              <div className={styles.app}>
+              <div className={styles.app} vaul-drawer-wrapper="true">
                 <Header
                   navigation={config.maintenance ? null : <Navigation />}
                   brandTop={<Brand />}

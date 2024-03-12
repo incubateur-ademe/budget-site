@@ -8,7 +8,7 @@ export type BoxProps = PropsWithChildren<
   React.HTMLAttributes<HTMLDivElement> &
     ResponsiveSpacingProps &
     SpacingProps & {
-      as?: "article" | "div" | "footer" | "p" | "section";
+      as?: "article" | "aside" | "div" | "footer" | "header" | "p" | "section";
       className?: CxArg;
     }
 >;

@@ -3,12 +3,12 @@
 import AirtableError from "airtable/lib/airtable_error";
 import { format } from "date-fns";
 import { partition } from "lodash";
-import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 
 import { craTable } from "@/lib/airtable/client";
 import { type CraDto } from "@/lib/dto";
 import { auth } from "@/lib/next-auth/auth";
+import { revalidateTags } from "@/revalidateTags";
 import { type ServerActionResponse } from "@/utils/next";
 
 export const saveCRAs = async (
@@ -104,7 +104,6 @@ export const saveCRAs = async (
     return { ok: false, error: "Erreur inconnue lors de la suppression." };
   }
 
-  revalidatePath(`/cra/declaration/${yearMonth}`);
-  revalidatePath(`/cra/validation/${yearMonth}`);
+  revalidateTags(`CRA:Membre:${session.user.id}:YearMonth:${yearMonth}`);
   return { ok: true };
 };

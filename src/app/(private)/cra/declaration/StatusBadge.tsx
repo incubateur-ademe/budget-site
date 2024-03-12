@@ -3,15 +3,18 @@ import { cx, type CxArg } from "@codegouvfr/react-dsfr/tools/cx";
 
 import { type CraDto } from "@/lib/dto";
 
+type ExtendedStatus = CraDto["status"] | "Mission manquante";
+
 export interface StatusBadgeProps {
   className?: CxArg;
-  status: CraDto["status"];
+  status: ExtendedStatus;
 }
 
-const statusToBadge: Record<CraDto["status"], BadgeProps["severity"]> = {
+const statusToBadge: Record<ExtendedStatus, BadgeProps["severity"]> = {
   "À compléter": "info",
   Validé: "success",
   "À valider": "warning",
+  "Mission manquante": "error",
 };
 
 export const StatusBadge = ({ status, className }: StatusBadgeProps) => {
